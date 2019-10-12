@@ -25,6 +25,7 @@
 #include <HTTPClient.h>
 #include <JPEGDecoder.h>
 #include "DrawRollPitchYaw.h"
+#include "Gauge.h"
 
 #include "Config.h"
 #define USE_CONFIG_OVERRIDE //!< Switch to use ConfigOverride
@@ -34,6 +35,8 @@
 
 
 DrawRollPitchYaw drawRollPitchYaw(280, 50, 40, 50);
+Gauge            voltmeter  (12.0, "Power", "V",     70, 225, 40);
+Gauge            temperature(40.0, "Temp",  "Grad", 170, 225, 40);
 
 const int picBufferSize = 20*1024; // Origin 80*1024
 void     *picBuffer     = NULL;
@@ -50,16 +53,16 @@ String sendAction(String keys);
 class RoverInfo
 {
 public:
-   int  roll;
-   int  pitch;
-   int  yaw;
-   int  temp;
-   int  volt;
-   int  leftLight;
-   int  rightLight;
-   int  soundLevel;
-   bool infoMode;
-   bool lastInfoMode;
+   int    roll;
+   int    pitch;
+   int    yaw;
+   double temp;
+   double volt;
+   int    leftLight;
+   int    rightLight;
+   int    soundLevel;
+   bool   infoMode;
+   bool   lastInfoMode;
 
 protected:
    String getInfoPart(String info, String type)
@@ -81,8 +84,8 @@ public:
       : roll(0)
       , pitch(0)
       , yaw(0)
-      , temp(0)
-      , volt(0)
+      , temp(0.0)
+      , volt(0.0)
       , leftLight(0)
       , rightLight(0)
       , soundLevel(0)
@@ -109,8 +112,8 @@ public:
       pitch      =  X.toInt();
       roll       = -Y.toInt();
       yaw        =  Z.toInt();
-      temp       =  T.toInt();
-      volt       =  V.toInt();
+      temp       =  T.toDouble();
+      volt       =  V.toDouble();
       leftLight  =  LL.toInt();
       rightLight =  LR.toInt();
       soundLevel =  S.toInt();
@@ -318,8 +321,11 @@ void loop()
             drawRollPitchYaw.draw(roverInfo.roll, roverInfo.pitch, roverInfo.yaw);
          }
       }
+      // FRAMESIZE_HQVGA,    // 240x176 
+      voltmeter.draw(roverInfo.volt); 
+      temperature.draw(roverInfo.temp); 
    }  
-   
+
    GO.update(); 
    yield();
    delay(10);
