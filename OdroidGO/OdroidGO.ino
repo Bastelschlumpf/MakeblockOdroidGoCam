@@ -26,6 +26,7 @@
 #include <JPEGDecoder.h>
 #include "DrawRollPitchYaw.h"
 #include "Gauge.h"
+#include "ValueBar.h"
 
 #include "Config.h"
 #define USE_CONFIG_OVERRIDE //!< Switch to use ConfigOverride
@@ -35,8 +36,10 @@
 
 
 DrawRollPitchYaw drawRollPitchYaw(280, 50, 40, 50);
-Gauge            voltmeter  (12.0, "Power", "V",     70, 225, 40);
-Gauge            temperature(40.0, "Temp",  "Grad", 170, 225, 40);
+Gauge            voltmeter  (12.0, "Power", "V",     72, 225, 40);
+Gauge            temperature(40.0, "Temp",  "Grad", 168, 225, 40);
+ValueBar         leftLight  (1024, "L",      10, 227, 10, 42);
+ValueBar         rightLight (1024, "R",     220, 227, 10, 42);
 
 const int picBufferSize = 20*1024; // Origin 80*1024
 void     *picBuffer     = NULL;
@@ -272,6 +275,19 @@ String sendAction(String keys)
    return ret;
 }
 
+/** Demo mode for testing. */
+void demo()
+{
+   drawRollPitchYaw.draw((rand() % 50) - 25, (rand() % 40) - 20, 360 - (rand() % 180));
+   voltmeter.draw(rand() % 12); 
+   temperature.draw(rand() % 30); 
+   leftLight.draw(rand() % 1024);
+   rightLight.draw(rand() % 1024);
+   GO.update(); 
+   yield();
+   delay(500);
+}
+
 /** Main setup function. */
 void setup()
 { 
@@ -297,6 +313,9 @@ void setup()
 /** Main loop function. */
 void loop()
 {
+//   demo();
+//   return;
+   
    if (WiFi.status() != WL_CONNECTED) {
       GO.lcd.drawString("WiFi not connected", 10, 10);
       Serial.println("No Wifi");
@@ -324,6 +343,8 @@ void loop()
       // FRAMESIZE_HQVGA,    // 240x176 
       voltmeter.draw(roverInfo.volt); 
       temperature.draw(roverInfo.temp); 
+      leftLight.draw(roverInfo.leftLight);
+      rightLight.draw(roverInfo.rightLight);
    }  
 
    GO.update(); 

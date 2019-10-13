@@ -52,7 +52,7 @@ protected:
    void drawHorizonInfo(int roll, int pitch);
    void drawCompass(int centreX, int centreY, int radius, int angle, int lastAngle);   
    void drawCompassRose(int centreX, int centreY, int radius, int angle);
-   void drawCompassArrow(int x2, int y2, int x1, int y1, int alength, int awidth, int colour);
+   void drawCompassArrow(int x2, int y2, int x1, int y1, int alength, int awidth, int color);
 
 public:
    DrawRollPitchYaw(int xCenterSet, int yCenterSet, int xWidthSet, int yWidthSet);
@@ -257,7 +257,7 @@ void DrawRollPitchYaw::drawCompassRose(int centreX, int centreY, int radius, int
    GO.lcd.drawNumber(angle, centreX, centreY + 17, 1);
 }
 
-void DrawRollPitchYaw::drawCompassArrow(int x2, int y2, int x1, int y1, int alength, int awidth, int colour) 
+void DrawRollPitchYaw::drawCompassArrow(int x2, int y2, int x1, int y1, int alength, int awidth, int color) 
 {
    float distance;
    int   dx, dy, x2o,y2o,x3,y3,x4,y4,k;
@@ -272,11 +272,11 @@ void DrawRollPitchYaw::drawCompassArrow(int x2, int y2, int x1, int y1, int alen
    y3 = x2o * k + dy;
    x4 = dx - y2o * k;
    y4 = dy - x2o * k;
-   GO.lcd.drawLine(x1, y1, x2, y2, colour);
-   GO.lcd.drawLine(x1, y1, dx, dy, colour);
-   GO.lcd.drawLine(x3, y3, x4, y4, colour);
-   GO.lcd.drawLine(x3, y3, x2, y2, colour);
-   GO.lcd.drawLine(x2, y2, x4, y4, colour);
+   GO.lcd.drawLine(x1, y1, x2, y2, color);
+   GO.lcd.drawLine(x1, y1, dx, dy, color);
+   GO.lcd.drawLine(x3, y3, x4, y4, color);
+   GO.lcd.drawLine(x3, y3, x2, y2, color);
+   GO.lcd.drawLine(x2, y2, x4, y4, color);
 } 
 
 void DrawRollPitchYaw::drawCompass(int centreX, int centreY, int radius, int angle, int lastAngle)
@@ -288,6 +288,6 @@ void DrawRollPitchYaw::drawCompass(int centreX, int centreY, int radius, int ang
    int last_dx = (0.7*radius * cos((lastAngle-90)*3.14/180)) + centreX;
    int last_dy = (0.7*radius * sin((lastAngle-90)*3.14/180)) + centreY;
    
-   drawCompassArrow(last_dx, last_dy, centreX, centreY, 4, 4, BLACK); // Erase last arrow      
-   drawCompassArrow(dx,      dy,      centreX, centreY, 4, 4, WHITE); // Draw new arrow
+   drawCompassArrow(last_dx, last_dy, centreX, centreY, 4, 4, BLACK);  // Erase last arrow      
+   drawCompassArrow(dx,      dy,      centreX, centreY, 4, 4, YELLOW); // Draw new arrow
 }

@@ -20,6 +20,7 @@
   * helper class to draw a gauge like a voltmeter
   */
 
+
 class Gauge
 {
 protected:
@@ -100,8 +101,6 @@ void Gauge::drawLabels()
 
       if (angle != 0) {
          GO.lcd.drawString(String((int) labelValue), x1, y1);
-         //GO.lcd.setCursor(x1 - 3, y1);
-         //GO.lcd.print((int) labelValue);
       }
       labelValue += labelStep;
    }
