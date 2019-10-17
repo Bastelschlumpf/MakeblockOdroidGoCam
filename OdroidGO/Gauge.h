@@ -116,8 +116,6 @@ void Gauge::drawPointer(double value)
       int x2 = xCenter - (radius - tickLen) * cos(value / range * PI);
       int y2 = yCenter - (radius - tickLen) * sin(value / range * PI);
 
-      Serial.println("value: " + String(value, 2) + " range: " + String(range, 2) + "x2: " + String(x2) + " y2: " + String(y2));
-   
       GO.lcd.fillTriangle(x1, y1, x2, y2, x3, y3, RED);
    }
 }
