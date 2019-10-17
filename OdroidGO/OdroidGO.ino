@@ -313,8 +313,8 @@ void setup()
 /** Main loop function. */
 void loop()
 {
-//   demo();
-//   return;
+   // demo();
+   // return;
    
    if (WiFi.status() != WL_CONNECTED) {
       GO.lcd.drawString("WiFi not connected", 10, 10);

@@ -44,14 +44,14 @@ protected:
    
 public:
    Gauge(double rangeSet, const String &gaugeLabelSet, const String &unitTextSet, 
-         int xCenterSet, int yCenterSet, int radiusSet, int tickLenSet = 5, int tickCountSet = 8, int posinterWidthSet = 2);
+         int xCenterSet, int yCenterSet, int radiusSet, int tickLenSet = 5, int tickCountSet = 7, int posinterWidthSet = 2);
 
    void draw(double value);
 };
 
 
 Gauge::Gauge(double rangeSet, const String &gaugeLabelSet, const String &unitTextSet,
-             int xCenterSet, int yCenterSet, int radiusSet, int tickLenSet /*= 10*/, int tickCountSet /*= 8*/, int pointerWidthSet /*= 2*/)
+             int xCenterSet, int yCenterSet, int radiusSet, int tickLenSet /*= 10*/, int tickCountSet /*= 7*/, int pointerWidthSet /*= 2*/)
    : range(rangeSet)
    , gaugeLabel(gaugeLabelSet)
    , unitText(unitTextSet)
@@ -77,7 +77,7 @@ void Gauge::drawHalfCircle()
 
 void Gauge::drawTicks()
 {
-   for (double angle = 0.0; angle < 180.0; angle += (180.0 / (tickCount - 1))) {
+   for (double angle = 0.0; angle < 180.0; angle += (180.0 / tickCount)) {
       int x1 = xCenter - (radius - tickLen) * cos(angle * PI / 180.0);
       int y1 = yCenter - (radius - tickLen) * sin(angle * PI / 180.0);
       int x2 = xCenter - radius * cos(angle * PI / 180);
@@ -93,7 +93,7 @@ void Gauge::drawLabels()
    double labelStep  = range / tickCount;
    
    GO.lcd.setTextPadding(0);
-   for (double angle = 0.0; angle < 180.0; angle += (180.0 / (tickCount - 1))) {
+   for (double angle = 0.0; angle < 180.0; angle += (180.0 / tickCount)) {
       int x1 = xCenter - (radius - 2.5 * tickLen) * cos(angle * PI / 180.0);
       int y1 = yCenter - (radius - 2.5 * tickLen) * sin(angle * PI / 180.0);
       int x2 = xCenter - radius * cos(angle * PI / 180);
@@ -113,8 +113,10 @@ void Gauge::drawPointer(double value)
       int y1 = yCenter;
       int x3 = xCenter + pointerWidth;
       int y3 = yCenter;
-      int x2 = xCenter - (radius - tickLen / 2) * cos(value / range * PI);
-      int y2 = yCenter - (radius - tickLen / 2) * sin(value / range * PI);
+      int x2 = xCenter - (radius - tickLen) * cos(value / range * PI);
+      int y2 = yCenter - (radius - tickLen) * sin(value / range * PI);
+
+      Serial.println("value: " + String(value, 2) + " range: " + String(range, 2) + "x2: " + String(x2) + " y2: " + String(y2));
    
       GO.lcd.fillTriangle(x1, y1, x2, y2, x3, y3, RED);
    }

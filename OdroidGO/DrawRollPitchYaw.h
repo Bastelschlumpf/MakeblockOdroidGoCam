@@ -44,6 +44,8 @@ protected:
    int last_pitch;
    int last_yaw;
 
+   bool init;
+
    ClipRect clipRect;
 
 protected:
@@ -70,6 +72,7 @@ DrawRollPitchYaw::DrawRollPitchYaw(int xCenterSet, int yCenterSet, int xWidthSet
    , last_roll(0)
    , last_pitch(0)
    , last_yaw(0)
+   , init(true)
    , clipRect(xCenterSet - xWidthSet, yCenterSet - yWidthSet, xCenterSet + xWidthSet, yCenterSet + yWidthSet)
 {
 }
@@ -79,9 +82,6 @@ void DrawRollPitchYaw::begin()
    GO.lcd.setTextSize(1); 
    GO.lcd.setTextColor(TFT_YELLOW, SKY_BLUE);
    GO.lcd.setTextDatum(TC_DATUM);
-   
-   GO.lcd.fillRect(xCenter - xWidth, yCenter - yWidth, 2 * xWidth, yWidth, SKY_BLUE);
-   GO.lcd.fillRect(xCenter - xWidth, yCenter,          2 * xWidth, yWidth, BROWN);
 }
 
 void DrawRollPitchYaw::draw(int roll, int pitch, int yaw)
@@ -91,9 +91,11 @@ void DrawRollPitchYaw::draw(int roll, int pitch, int yaw)
    int delta_roll  = 0;
    int delta_yaw   = 0;
 
-   GO.lcd.setTextSize(1); 
-   GO.lcd.setTextColor(TFT_YELLOW, SKY_BLUE);
-   GO.lcd.setTextDatum(TC_DATUM);
+   if (init) {
+      init = false;
+      GO.lcd.fillRect(xCenter - xWidth, yCenter - yWidth, 2 * xWidth, yWidth, SKY_BLUE);
+      GO.lcd.fillRect(xCenter - xWidth, yCenter,          2 * xWidth, yWidth, BROWN);
+   }
    
    while ((last_pitch != pitch) || (last_roll != roll)) {
       delta_pitch = 0;
