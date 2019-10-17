@@ -2,11 +2,9 @@
 ## MakeblockOdroidGoCam
    **Video remote control of a MakeBlock Auriga Ranger with an Odroid GO.**
 
-   ![Odroid GO](images/OdroidGo.png "Odroid GO")
-
-   ![Camera](images/Camera.png "Camera")
-
    ![Ranger](images/Ranger.png "Ranger")
+
+   ![Odroid GO](images/OdroidGo.png "Odroid GO")
 
 ### Description
    The goal was to control the Makeblock Auriga ranger with an Odroid GO.
