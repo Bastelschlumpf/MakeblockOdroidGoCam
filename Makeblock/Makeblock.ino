@@ -110,13 +110,13 @@ void loop()
             // All commands should start with "21"
             if (serialData.indexOf("21") == 0) {
                if (serialData.indexOf('Y') != -1) {
-                  move.forward(10.0);
+                  move.forward(100.0);
                } else if (serialData.indexOf('y') != -1) {
-                  move.reverse(10.0);
+                  move.reverse(100.0);
                } else if (serialData.indexOf('X') != -1) {
-                  move.twistDelta(10.0);
+                  move.twistDelta(100.0);
                } else if (serialData.indexOf('x') != -1) {
-                  move.twistDelta(-10.0);
+                  move.twistDelta(-100.0);
                } else {
                   move.stop();
                } 
