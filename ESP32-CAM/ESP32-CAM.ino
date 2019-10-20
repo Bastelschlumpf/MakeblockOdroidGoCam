@@ -109,7 +109,7 @@ bool   infoMode = true;
 
 String getActionCmds(String cmds)
 {
-   if (cmds.indexOf('A') != -1) {
+   if (cmds.indexOf('M') != -1) {
       sensor_t * s = esp_camera_sensor_get();
       
       infoMode = !infoMode; // toggle info mode on 'A' button
