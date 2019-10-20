@@ -154,6 +154,15 @@ void demo()
    delay(500);
 }
 
+void checkKeys(void *parameter)
+{
+   while (1) {
+      // Serial.println("Check keys in Task");
+      odroidKeys.check();
+      delay(10);
+   }
+}
+
 /** Main setup function. */
 void setup()
 { 
@@ -174,15 +183,8 @@ void setup()
    Serial.println("Used Flash Memory: "  + String(ESP.getSketchSize())        + " Byte");
    Serial.println("Free Sketch Memory: " + String(ESP.getFreeSketchSpace())   + " Byte");
    Serial.println("Free Heap Memory: "   + String(ESP.getFreeHeap())          + " Byte");
-}
 
-void checkKeys(void *parameter)
-{
-   while (1) {
-      // Serial.println("Check keys in Task");
-      odroidKeys.check();
-      delay(10);
-   }
+   xTaskCreate(checkKeys, "checkKeys", 10000, NULL, 1, NULL);       
 }
 
 /** Main loop function. */
@@ -212,14 +214,14 @@ void loop()
          }
          GO.lcd.drawJpg((const uint8_t *) picBuffer, picLen); 
          if (roverInfo.infoMode) {
+            // FRAMESIZE_HQVGA,    // 240x176 
             drawRollPitchYaw.draw(roverInfo.roll, roverInfo.pitch, roverInfo.yaw);
+            voltmeter.draw(roverInfo.volt); 
+            temperature.draw(roverInfo.temp); 
+            leftLight.draw(roverInfo.leftLight);
+            rightLight.draw(roverInfo.rightLight);
          }
       }
-      // FRAMESIZE_HQVGA,    // 240x176 
-      voltmeter.draw(roverInfo.volt); 
-      temperature.draw(roverInfo.temp); 
-      leftLight.draw(roverInfo.leftLight);
-      rightLight.draw(roverInfo.rightLight);
    }  
 
    GO.update(); 
