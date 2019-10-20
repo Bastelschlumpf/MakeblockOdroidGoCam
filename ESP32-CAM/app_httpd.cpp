@@ -249,7 +249,7 @@ static esp_err_t capture_handler(httpd_req_t *req){
         }
         esp_camera_fb_return(fb);
         int64_t fr_end = esp_timer_get_time();
-        Serial.printf("JPG: %uB %ums\n", (uint32_t)(fb_len), (uint32_t)((fr_end - fr_start)/1000));
+        //Serial.printf("JPG: %uB %ums\n", (uint32_t)(fb_len), (uint32_t)((fr_end - fr_start)/1000));
         return res;
     }
 
