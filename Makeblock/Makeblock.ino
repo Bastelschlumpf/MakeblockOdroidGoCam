@@ -114,9 +114,9 @@ void loop()
                } else if (serialData.indexOf('y') != -1) {
                   move.reverse(100.0);
                } else if (serialData.indexOf('X') != -1) {
-                  move.twistDelta(100.0);
+                  move.twistDelta(10.0);
                } else if (serialData.indexOf('x') != -1) {
-                  move.twistDelta(-100.0);
+                  move.twistDelta(-10.0);
                } else {
                   move.stop();
                } 
