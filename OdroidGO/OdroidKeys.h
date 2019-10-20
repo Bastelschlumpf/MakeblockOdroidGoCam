@@ -36,6 +36,7 @@ public:
    bool btnVolume;
    bool btnSelect;
    bool btnStart;
+   long menuSend;
 
 public:
    OdroidKeys();
@@ -54,6 +55,7 @@ OdroidKeys::OdroidKeys()
    , btnVolume(false)
    , btnSelect(false)
    , btnStart(false)
+   , menuSend(0)
 {
 }
 
@@ -121,10 +123,12 @@ String OdroidKeys::getKeys()
       keys += "B";
       sep  = '&';
    }
-   if (btnMenu) {
+   // debounce the info mode switch
+   if (btnMenu && millis() - menuSend > 1500) {
       keys += sep;
       keys += "M";
       sep  = '&';
+      menuSend = millis();
    }
    if (btnVolume) {
       keys += sep;
